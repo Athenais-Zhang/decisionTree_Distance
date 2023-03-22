@@ -5,6 +5,7 @@
 # @Site    : 
 # @File    : test.py
 # @Software: PyCharm
+import datetime
 import numpy as np
 from sklearn.utils import shuffle
 
@@ -43,12 +44,14 @@ def test(filename: str):
         t.createGraph("fileDot/test%s.dot" % (str(index)))
         index += 1
         scores.append(t.score(X_test, y_test))
-    print("average acc: %s  , the detail is %s \n" % (np.average(scores), scores))
+    print("average acc: %s  , the detail is %s " % (np.average(scores), scores))
     return scores
 
-
 # 单个数据集交叉验证
-test("dataset/activity.txt")
+starttime = datetime.datetime.now()
+test("dataset/context.txt")
+endtime = datetime.datetime.now()
+print("执行时间："+str((endtime - starttime).seconds))
 
 # 验证代码正确性
 # f = open("dataset_small/activity.txt", 'r')
@@ -65,3 +68,4 @@ test("dataset/activity.txt")
 # tree=DT_seq()
 # tree.fit(X,y)
 # print(tree.predict(X[0]))
+

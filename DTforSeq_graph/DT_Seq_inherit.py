@@ -20,7 +20,12 @@ def findCenter(X, distances):
     for x in X:
         dis = 0
         for z in X:
-            dis += (distances[z[0]][x[0]] | distances[x[0]][z[0]])
+            # dis += (distances[z[0]][x[0]] | distances[x[0]][z[0]])
+            # dis += (distances[z[0]][x[0]] if distances[x[0]][z[0]])==0.0 else distances[x[0]][z[0]]))
+            if distances[z[0]][x[0]] == 0:
+                dis += distances[x[0]][z[0]]
+            else:
+                dis += distances[z[0]][x[0]]
         # dis = sum(distances[x[0]][0:x[0]]) + sum(distances[:, x[0]])
         if minDis > dis:
             minDis = dis
@@ -34,15 +39,16 @@ def calcDistance(X):
     length = len(X)
 
     # 建立一个length*length的二维矩阵
-    distances = np.zeros((length, length), dtype=int)
+    distances = np.zeros((length, length), dtype=float)
 
     # 计算edit distance并存入矩阵
     for i in range(length):
         for j in range(i):
             # minDistance(word1, word2)为计算edit distance的方法，用动态规划复杂度为平方级
             # TODO distance01
-            distances[i][j] = minDistance(word1=X[i], word2=X[j])
-            # distances[i][j] = LCSSeq().similarity(X[i], X[j])
+            # distances[i][j] = minDistance(word1=X[i], word2=X[j])
+            simlarity = LCSSeq().similarity(X[i], X[j])
+            distances[i][j] = (1 / simlarity) if simlarity != 0 else 1
     return distances
 
 
@@ -95,7 +101,7 @@ class DT_seq():
             return None
         self.center = represent
         self.root = type
-        print("building...%s,%s" % (self.root, self.center))
+        # print("building...%s,%s" % (self.root, self.center))
         if len(set(y)) == 1 or len(X) <= self.maxLeafSize:
             return self
         # for index in range(1, len(X)):
@@ -129,7 +135,11 @@ class DT_seq():
             minDis = math.inf
             minRepresent = None
             for represent in represents:
-                dis = distances[index][represents[represent][0]] | distances[represents[represent][0]][index]
+                if distances[index][represents[represent][0]] == 0:
+                    dis = distances[represents[represent][0]][index]
+                else:
+                    dis = distances[index][represents[represent][0]]
+                # dis = distances[index][represents[represent][0]] | distances[represents[represent][0]][index]
                 if dis < minDis:
                     minDis = dis
                     minRepresent = represent
@@ -149,13 +159,13 @@ class DT_seq():
                 self.children[type] = DT_seq()
                 self.children[type].fit(childX[type], childY[type], type, represents[type])
         # print("one")
-        preHeight = 0
-        nodeN = 0
-        for type in types:
-            preHeight = max(self.children[type].height, preHeight)
-            nodeN += self.children[type].nodeNum
-        self.height = preHeight + 1
-        self.nodeNum = nodeN + 1
+        # preHeight = 0
+        # nodeN = 0
+        # for type in types:
+        #     preHeight = max(self.children[type].height, preHeight)
+        #     nodeN += self.children[type].nodeNum
+        # self.height = preHeight + 1
+        # self.nodeNum = nodeN + 1
         return self
 
     def predict(self, data):
@@ -166,8 +176,9 @@ class DT_seq():
         for type in self.children:
             # TODO distance02
             # dis = minDistance(str(data), str(self.children[type].center[1]))
-            dis = minDistance(data, self.children[type].center[1])
-            # dis = LCSSeq().similarity(data, self.children[type].center[1])
+            # dis = minDistance(data, self.children[type].center[1])
+            similarity = LCSSeq().similarity(data, self.children[type].center[1])
+            dis = (1 / similarity) if similarity != 0 else 1
             if minDis > dis:
                 minDis = dis
                 closeType = type
