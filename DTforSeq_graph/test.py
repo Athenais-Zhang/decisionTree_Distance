@@ -40,7 +40,7 @@ def test(filename: str):
         X_train, y_train = shuffle(X_train, y_train)
         t = DT_seq()
         t.fit(X_train, y_train)
-        t.createGraph("test%s.dot" % (str(index)))
+        t.createGraph("fileDot/test%s.dot" % (str(index)))
         index += 1
         scores.append(t.score(X_test, y_test))
     print("average acc: %s  , the detail is %s \n" % (np.average(scores), scores))
@@ -48,7 +48,7 @@ def test(filename: str):
 
 
 # 单个数据集交叉验证
-test("activity.txt")
+test("dataset/activity.txt")
 
 # 验证代码正确性
 # f = open("dataset_small/activity.txt", 'r')

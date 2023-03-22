@@ -11,6 +11,7 @@ from sklearn import tree
 import math
 import numpy as np
 from sklearn.tree import BaseDecisionTree
+from textdistance import LCSSeq
 
 
 def findCenter(X, distances):
@@ -39,7 +40,9 @@ def calcDistance(X):
     for i in range(length):
         for j in range(i):
             # minDistance(word1, word2)为计算edit distance的方法，用动态规划复杂度为平方级
+            # TODO distance01
             distances[i][j] = minDistance(word1=X[i], word2=X[j])
+            # distances[i][j] = LCSSeq().similarity(X[i], X[j])
     return distances
 
 
@@ -161,7 +164,10 @@ class DT_seq():
         minDis = math.inf
         closeType = self.root
         for type in self.children:
-            dis = minDistance(str(data), str(self.children[type].center[1]))
+            # TODO distance02
+            # dis = minDistance(str(data), str(self.children[type].center[1]))
+            dis = minDistance(data, self.children[type].center[1])
+            # dis = LCSSeq().similarity(data, self.children[type].center[1])
             if minDis > dis:
                 minDis = dis
                 closeType = type
