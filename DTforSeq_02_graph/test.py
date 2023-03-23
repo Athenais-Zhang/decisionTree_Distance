@@ -97,6 +97,6 @@ def test_allDataset():
 
 
 if __name__ == '__main__':
-    # test_codeCorrectly()
+    test_codeCorrectly("../dataset/activity.txt")
     # test("./dataset/activity.txt")
-    test_allDataset()
+    # test_allDataset()
