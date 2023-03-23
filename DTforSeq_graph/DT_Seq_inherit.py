@@ -6,6 +6,7 @@
 # @File    : DT_Seq_inherit.py
 # @Software: PyCharm
 from collections import deque
+from multiprocessing import Process
 
 from sklearn import tree
 import math

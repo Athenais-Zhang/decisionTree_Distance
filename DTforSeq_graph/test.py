@@ -8,12 +8,8 @@
 import datetime
 import numpy as np
 from sklearn.utils import shuffle
-
 from DT_Seq_inherit import DT_seq
 from sklearn.model_selection import KFold, StratifiedKFold
-from IPython.display import Image
-from sklearn import tree
-import pydotplus
 
 
 def test(filename: str):
@@ -32,6 +28,7 @@ def test(filename: str):
     y = np.array(y)
     scores = []
     print("%s's size: %s , types: %s" % (filename, len(X), len(set(y))))
+    starttime = datetime.datetime.now()
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=None)
     index = 0
     for train_index, test_index in skf.split(X, y):
@@ -41,31 +38,65 @@ def test(filename: str):
         X_train, y_train = shuffle(X_train, y_train)
         t = DT_seq()
         t.fit(X_train, y_train)
-        t.createGraph("fileDot/test%s.dot" % (str(index)))
+        t.createGraph("fileDot/test_%s_%s.dot" % (filename.split("/")[-1].split(".")[0], str(index)))
         index += 1
         scores.append(t.score(X_test, y_test))
-    print("average acc: %s  , the detail is %s " % (np.average(scores), scores))
+    print("average acc: %.2f  , the detail is %s " % (np.average(scores), scores))
+    endtime = datetime.datetime.now()
+    print("5-fold run time：" + str((endtime - starttime).seconds) + "s\n")
     return scores
 
-# 单个数据集交叉验证
-starttime = datetime.datetime.now()
-test("dataset/context.txt")
-endtime = datetime.datetime.now()
-print("执行时间："+str((endtime - starttime).seconds))
 
-# 验证代码正确性
-# f = open("dataset_small/activity.txt", 'r')
-# line = f.readline()
-# X = []
-# y = []
-# while line:
-#     res=line.split()
-#     X.append(res[1:])
-#     y.append(res[0])
-#     line = f.readline()
-# f.close()
-#
-# tree=DT_seq()
-# tree.fit(X,y)
-# print(tree.predict(X[0]))
+def test_codeCorrectly(filePathName):
+    # 验证代码正确性
+    f = open(filePathName, 'r')
+    line = f.readline()
+    X = []
+    y = []
+    while line:
+        res = line.split()
+        X.append(res[1:])
+        y.append(res[0])
+        line = f.readline()
+    f.close()
 
+    tree = DT_seq()
+    tree.fit(X, y)
+    print(tree.predict(X[0]))
+
+
+# 所有数据集
+fileNames = [
+    'activity.txt',
+    'aslbu.txt',
+    'auslan2.txt',
+    'context.txt',
+    'epitope.txt',
+    'gene.txt',
+    'news.txt',
+    'pioneer.txt',
+    'question.txt',
+    'reuters.txt',
+    'robot.txt',
+    'skating.txt',
+    'unix.txt',
+    'webkb.txt'
+]
+fileFolderNames = ["dataset"]
+
+
+def test_allDataset():
+    accs = {}
+    for fileName in fileNames:
+        try:
+            res = test(fileFolderNames[0] + "/" + fileName)
+            accs[fileName] = res
+        except Exception as e:
+            print("there's an error with %s, the error type is %s, detail: %s\n" % (fileName, type(e), e))
+    print("===============================================endend===============================================")
+
+
+if __name__ == '__main__':
+    # test_codeCorrectly()
+    # test("./dataset/activity.txt")
+    test_allDataset()
