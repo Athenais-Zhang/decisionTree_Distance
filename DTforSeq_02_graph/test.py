@@ -62,6 +62,7 @@ def test_codeCorrectly(filePathName):
 
     tree = DT_seq()
     tree.fit(X, y)
+    tree.createGraph("d2.dot")
     print(tree.predict(X[0]))
 
 
@@ -97,6 +98,6 @@ def test_allDataset():
 
 
 if __name__ == '__main__':
-    test_codeCorrectly("../dataset/activity.txt")
-    # test("./dataset/activity.txt")
+    # test_codeCorrectly("../dataset/activity_2.txt")
+    test("./dataset/activity.txt")
     # test_allDataset()

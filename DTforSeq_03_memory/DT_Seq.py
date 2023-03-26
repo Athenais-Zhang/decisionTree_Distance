@@ -6,6 +6,7 @@
 # @File    : DT_Seq.py
 # @Software: PyCharm
 import math
+from collections import deque
 
 from DTforSeq_03_memory import global_var
 from DTforSeq_03_memory.tools import findCenter, calDis
@@ -19,6 +20,7 @@ class DT_seq():
     center = None
     height = 1
     nodeNum = 1
+    length = 0
 
     def __init__(self, leafSize=maxLeafSize):
         self.maxLeafSize = leafSize
@@ -30,8 +32,9 @@ class DT_seq():
         if len(indeices) == 0:
             return None
         self.centerIndex = represent
-        self.center = global_var.get_value('gl_Xtrain')[represent] if represent!=None else None
+        self.center = global_var.get_value('gl_Xtrain')[represent] if represent != None else None
         self.root = cate
+        self.length = len(indeices)
         if len(indeices) <= self.maxLeafSize:
             return self
         # X = [global_var.get_value('gl_Xtrain')[index] for index in indeices]
@@ -64,9 +67,10 @@ class DT_seq():
             for represent in represents:
                 i = min(index, represents[represent])
                 j = max(index, represents[represent])
-                if i==j:
-                    continue
-                dis = gl_distances[i + ((j - 1) * j >> 1)]
+                if i == j:
+                    dis = 0
+                else:
+                    dis = gl_distances[i + ((j - 1) * j >> 1)]
                 if dis < minDis:
                     minDis = dis
                     minRepresent = represent
@@ -93,7 +97,7 @@ class DT_seq():
         minDis = math.inf
         closeType = self.root
         for c in self.children:
-            dis = calDis(data,self.children[c].center)
+            dis = calDis(data, self.children[c].center)
             if minDis > dis:
                 minDis = dis
                 closeType = c
@@ -105,3 +109,40 @@ class DT_seq():
             res = self.predict(X[index])
             errorTimes += 0 if res == y[index] else 1
         return ((len(X) - errorTimes) / len(X))
+
+    def createGraph(self, filePicName):
+        file = open(filePicName, 'w+')
+        try:
+            file.write("digraph G{\n")
+            file.write("node [shape=box];\nedge [fontname=helvetica];\n")
+            q = deque()
+            index = 0
+            q.append({'name': index, 'tree': self})
+            edgesDict = {}
+            while len(q) != 0:
+                t = q.pop()
+                representIndex = t['tree'].centerIndex
+                represent = t['tree'].center
+                type = t['tree'].root
+                length = t['tree'].length
+                file.write(
+                    "%s [label=<representIndex=%s<br/>rep=%s<br/>type=%s<br/>length=%s>];\n" % (
+                        t['name'], str(representIndex), str(represent), str(type), str(length))
+                )
+                edgesDict[t['name']] = []
+                childNum = len(t['tree'].children) if t['tree'].children != None else 0
+                if childNum != 0:
+                    for child in t['tree'].children:
+                        index += 1
+                        edgesDict[t['name']].append(index)
+                        q.append({'name': index, 'tree': t['tree'].children[child]})
+            for edges in edgesDict:
+                for edge in edgesDict[edges]:
+                    file.write(
+                        "%s -> %s;\n" % (edges, edge)
+                    )
+            file.write("}")
+        except Exception as e:
+            print(str(e))
+        finally:
+            file.close()

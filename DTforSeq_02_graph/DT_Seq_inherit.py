@@ -92,6 +92,7 @@ class DT_seq():
     center = None
     height = 0
     nodeNum = 0
+    length=0
 
     def __init__(self, leafSize=maxLeafSize):
         self.maxLeafSize = leafSize
@@ -102,6 +103,7 @@ class DT_seq():
             return None
         self.center = represent
         self.root = type
+        self.length = len(X)
         # print("building...%s,%s" % (self.root, self.center))
         if len(set(y)) == 1 or len(X) <= self.maxLeafSize:
             return self
@@ -207,8 +209,9 @@ class DT_seq():
                 t = q.pop()
                 represent = t['tree'].center
                 type = t['tree'].root
+                length=t['tree'].length
                 file.write(
-                    "%s [label=<represent=%s<br/>type=%s<br/>>];\n" % (t['name'], str(represent), str(type))
+                    "%s [label=<represent=%s<br/>type=%s<br/>length=%s<br/>>];\n" % (t['name'], str(represent), str(type),str(length))
                 )
                 edgesDict[t['name']] = []
                 childNum = len(t['tree'].children) if t['tree'].children != None else 0
