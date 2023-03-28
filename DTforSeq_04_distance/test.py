@@ -6,7 +6,11 @@
 # @File    : test.py
 # @Software: PyCharm
 import datetime
-
+import os
+import sys
+sys.path.append(os.path.dirname(sys.path[0]))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.append(BASE_DIR)
 from sklearn.model_selection import StratifiedKFold
 from sklearn.utils import shuffle
 
@@ -103,6 +107,7 @@ fileNames = [
 fileFolderNames = ["../dataset"]
 
 
+
 def test_allDataset():
     accs = {}
     for fileName in fileNames:
@@ -116,10 +121,16 @@ def test_allDataset():
     print("===============================================endend===============================================")
 
 
+distance_measures = [
+    'lcsSeq',
+    'lcsStr',
+    'rankDistance',
+]
+
 if __name__ == '__main__':
     global_var._init()
-    # global_var.set_value('distance_measure','')
+    global_var.set_value('distance_measure',distance_measures[int(sys.argv[1])])
 
     # test("../dataset/gene.txt")
     # test_codeCorrectly("../dataset/activity_2.txt")
-    # test_allDataset()
+    test_allDataset()

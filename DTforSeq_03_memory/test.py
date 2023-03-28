@@ -116,6 +116,6 @@ def test_allDataset():
 
 if __name__ == '__main__':
     global_var._init()
-    # test("../dataset/activity.txt")
+    test("../dataset/activity.txt")
     # test_codeCorrectly("../dataset/activity_2.txt")
-    test_allDataset()
+    # test_allDataset()

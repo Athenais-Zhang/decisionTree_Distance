@@ -12,6 +12,8 @@ import textdistance
 from textdistance import LCSSeq
 from tqdm.auto import tqdm
 
+from DTforSeq_04_distance import global_var
+
 
 def rankDistance(s1, s2):
     u1 = {}
@@ -67,9 +69,14 @@ def distance_measure_lcstr(seq1, seq2):
 
 
 def calDis(seq1, seq2):
-    # dis = lcsSeq_similarity(seq1, seq2)
-    # dis = rankDistance(seq1, seq2)
-    # dis = distance_measure_lcstr(seq1, seq2)
+    distance_measure = global_var.get_value('distance_measure')
+    dis = 0
+    if distance_measure == 'lcsSeq':
+        dis = lcsSeq_similarity(seq1, seq2)
+    elif distance_measure == 'rankDistance':
+        dis = rankDistance(seq1, seq2)
+    elif distance_measure == 'lcsStr':
+        dis = distance_measure_lcstr(seq1, seq2)
     return dis
 
 
