@@ -3,7 +3,7 @@
 # @Time    : 2023/3/26 14:33
 # @Author  : Yihan Zhang
 # @Site    : 
-# @File    : global_var.py
+# @File    : constant.py
 # @Software: PyCharm
 
 def _init():  # 初始化

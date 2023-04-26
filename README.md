@@ -5,7 +5,7 @@ this project is the realize of a decision tree based on distance.
 ## DTforSeq_01
 this is the basic, we can run it by
 ```shell
-python test.py
+python test_unit.py
 ```
 
 
@@ -19,5 +19,5 @@ DT_seq().fit().createGraph()
 
 besides we should run it by
 ```shell
-python test.py
+python test_unit.py
 ```

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2023/3/23 09:51
+# @Time    : 2023/4/3 14:28
 # @Author  : Yihan Zhang
 # @Site    : 
 # @File    : constant.py
@@ -21,4 +21,4 @@ def get_value(key):
     try:
         return _global_dict[key]
     except:
-        print('读取' + key + '失败\r\n')
+        print('05读取constant.py中' + key + '失败\r\n')

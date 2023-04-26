@@ -3,11 +3,12 @@
 # @Time    : 2023/3/26 14:34
 # @Author  : Yihan Zhang
 # @Site    : 
-# @File    : test.py
+# @File    : test_unit.py
 # @Software: PyCharm
 import datetime
 import os
 import sys
+
 sys.path.append(os.path.dirname(sys.path[0]))
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # sys.path.append(BASE_DIR)
@@ -59,7 +60,8 @@ def test(filename: str):
         scores.append(t.score(X_test, y_test))
     print("average acc: %.2f  , the detail is %s " % (np.average(scores), scores))
     endtime = datetime.datetime.now()
-    print("5-fold run time：" + str((endtime - starttime).seconds) + "s , ")
+    # print("5-fold run time：" + str((endtime - starttime).seconds) + "s , ")
+    print("5-fold run time：%ds, " % ((endtime - starttime).seconds))
     print("calculate distance cost time：" + str(calculateDisTime) + "s\n")
     return scores
 
@@ -89,23 +91,22 @@ def test_codeCorrectly(filePathName):
 
 # 所有数据集
 fileNames = [
-    'activity.txt',
-    'aslbu.txt',
-    'auslan2.txt',
-    'context.txt',
-    'epitope.txt',
-    'gene.txt',
-    'news.txt',
-    'pioneer.txt',
-    'question.txt',
-    'reuters.txt',
-    'robot.txt',
+    # 'activity.txt',
+    # 'aslbu.txt',
+    # 'auslan2.txt',
+    # 'context.txt',
+    # 'epitope.txt',
+    # 'gene.txt',
+    # 'news.txt',
+    # 'pioneer.txt',
+    # 'question.txt',
+    # 'reuters.txt',
+    # 'robot.txt',
     'skating.txt',
     'unix.txt',
     'webkb.txt'
 ]
 fileFolderNames = ["../dataset"]
-
 
 
 def test_allDataset():
@@ -129,7 +130,7 @@ distance_measures = [
 
 if __name__ == '__main__':
     global_var._init()
-    global_var.set_value('distance_measure',distance_measures[int(sys.argv[1])])
+    global_var.set_value('distance_measure', distance_measures[int(sys.argv[1])])
 
     # test("../dataset/gene.txt")
     # test_codeCorrectly("../dataset/activity_2.txt")
