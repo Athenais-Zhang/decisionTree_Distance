@@ -16,7 +16,7 @@ import DistanceTree_numerical as dt
 import DistanceTree_categorical as dtc
 
 def myTree_nemericalTest(X,y,curDepth=0, maxLeafSize=1, maxDepth=10000000):
-    k = 10
+    k = 5
     # kf = KFold(n_splits=k, shuffle=True, random_state=None)
     skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=None)
     acc = []
@@ -37,7 +37,7 @@ def myTree_nemericalTest(X,y,curDepth=0, maxLeafSize=1, maxDepth=10000000):
     return acc,TDepth,TNode
 
 def myTree_categoricalTest(X,y,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
-    k = 10
+    k = 5
     skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=None)
     acc = []
     heights = []
@@ -55,7 +55,7 @@ def myTree_categoricalTest(X,y,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth
     return acc,heights,nodes
 
 def contrastExperiment_categorical(X,y,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
-    k = 10
+    k = 5
     skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=None)
     acc = {'myTree':[],'standard':[],'nearestCentroid':[]}
     heights = {'myTree':[],'standard':[]}
@@ -84,7 +84,7 @@ def contrastExperiment_categorical(X,y,curDepth=0, maxLeafSize=1, meanWay=None, 
     return acc, heights, nodes
 
 def contrastExperiment_numerical(X,y,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
-    k = 10
+    k = 5
     skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=None)
     acc = {'myTree':[],'standard':[],'nearestCentroid':[]}
     heights = {'myTree':[],'standard':[]}

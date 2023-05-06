@@ -7,10 +7,10 @@
 import numpy as np
 from tqdm.auto import tqdm
 
-from decisionTree_Distance.DTforVec_02_exhaustion import constant, tools
+from DTforVec_categorical_02_exhaustion import constant, tools
 
 
-class DT_vec_categorical:
+class DT_vec_gini:
     height = 0  # 树高
     maxDepth = 0  # 最大深度
     curDepth = 0  # 当前深度
@@ -96,6 +96,7 @@ class DT_vec_categorical:
         # step4:迭代所有点为中心
         for cate in cates:
             for index in data[cate]:
+
                 curRepresents[cate] = index
                 sum_gini_temp, giniIndeies_temp, partitionResult_temp = self.__calcBranches(cates, curRepresents, indeices)
                 if sum_gini_temp < sum_gini:
@@ -108,7 +109,7 @@ class DT_vec_categorical:
         self.childTree={}
         for cate in cates:
             if giniIndeies[cate] == 0:
-                self.childTree[cate] = DT_vec_categorical(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
 
                 self.childTree[cate].centerIndex = represents[cate]
                 self.childTree[cate].center = constant.get_value('gl_Xtrain')[represents[cate]] if represents[cate] != None else None
@@ -116,13 +117,31 @@ class DT_vec_categorical:
 
                 continue
             if len(partitionResult[cate]) == 0:
-                self.childTree[cate] = None
+                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+
+                self.childTree[cate].centerIndex = represents[cate]
+                self.childTree[cate].center = constant.get_value('gl_Xtrain')[represents[cate]] if represents[cate] != None else None
+                self.childTree[cate].value = cate
                 continue
             elif len(partitionResult[cate]) ==len(indeices):
-                self.childTree[cate] = DT_vec_categorical(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
-                self.childTree[cate].fit(partitionResult[cate], cate, represents[cate])
+                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+                # self.childTree[cate].fit(partitionResult[cate], cate, represents[cate])
+
+                self.childTree[cate].centerIndex = represents[cate]
+                self.childTree[cate].center = constant.get_value('gl_Xtrain')[represents[cate]] if represents[cate] != None else None
+                self.childTree[cate].value = cate
                 continue
-            self.childTree[cate] = DT_vec_categorical(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+            # elif len(set(partitionResult[cate]))==1:
+            #     continue
+            res=tools.checkPartition(partitionResult[cate],cate)
+            if res is not None:
+                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+
+                self.childTree[cate].centerIndex = represents[cate]
+                self.childTree[cate].center = constant.get_value('gl_Xtrain')[represents[cate]] if represents[cate] != None else None
+                self.childTree[cate].value = res
+                continue
+            self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
             self.childTree[cate].fit(partitionResult[cate], cate, represents[cate])
 
         return self
@@ -148,5 +167,14 @@ class DT_vec_categorical:
         y_pred = self.predictAll(X)
         return tools.calcAccuracy(y, y_pred)
 
+
+    def printTree(self):
+        print(self.centerIndex)
+        print(self.center)
+        print(self.value)
+        print(self.childTreeNum)
+        print(self.childTree)
+        for cate in self.childTree:
+            self.childTree[cate].printTree()
 
 

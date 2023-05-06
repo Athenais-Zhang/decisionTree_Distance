@@ -4,10 +4,12 @@
 时间：20：25
 描述：
 """
+import math
+
 import numpy as np
 from tqdm.auto import tqdm
 
-from decisionTree_Distance.DTforVec_02_exhaustion import constant
+from DTforVec_categorical_02_exhaustion import constant
 
 
 def calcDistance(data1, data2):
@@ -17,23 +19,35 @@ def calcDistance(data1, data2):
                 dis += 1
         return dis
 
+def __euclideanDistance(data1, data2):
+    sum = 0
+    for row in range(len(data1)):
+        sum += math.pow(data1[row] - data2[row], 2)
+    return math.sqrt(sum)
+
 def calcDistancesMetric(X):
     length = len(X)
     distancesLen = (length * (length - 1)) >> 1
     distances = np.zeros(distancesLen, dtype=float)
     for j in tqdm(range(length)):
         for i in range(j):
-            distances[i + ((j - 1) * j >> 1)] = calcDistance(X[i], X[j])
+            # distances[i + ((j - 1) * j >> 1)] = calcDistance(X[i], X[j])
+            distances[i + ((j - 1) * j >> 1)] = __euclideanDistance(X[i], X[j])
     return distances
+
 
 def getDistance(index1,index2):
     gl_distances = constant.get_value('gl_distances')
-    i = min(index1,index2)
-    j = max(index1,index2)
-    if i == j:
-        dis = 0
-    else:
-        dis = gl_distances[i + ((j - 1) * j >> 1)]
+    try:
+        i = min(index1,index2)
+        j = max(index1,index2)
+        if i == j:
+            dis = 0
+        else:
+            dis = gl_distances[i + ((j - 1) * j >> 1)]
+    except:
+        print("getDistance error")
+        return None
     return dis
 
 
@@ -58,3 +72,15 @@ def getGiniIndex(Dataset):
         gini_temp +=  (len_D_C__k_c / len_D_C__k) ** 2
     gini = 1 - gini_temp
     return gini
+
+
+def checkPartition(dataset, cate):
+    # gl_Xtrain = constant.get_value('gl_Xtrain')
+    xSet=constant.get_value('gl_Xtrain')[dataset]
+    length=len(xSet)
+    for i in range(1,length):
+        if ((xSet[0]==xSet[i]).all() == False):
+            return None
+    # print("checkPartition")
+    # print(constant.get_value('gl_ytrain')[dataset])
+    return np.argmax(np.bincount(constant.get_value('gl_ytrain')[dataset]))

@@ -45,7 +45,7 @@ def printNumerical(X,y,dataName,curDepth=0, maxLeafSize=1, meanWay=None, maxDept
 def printCategorical(X,y,dataName,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
     print('\ncategorical：',dataName)
     acc,heights,nodes = tt.contrastExperiment_categorical(X,y,curDepth, maxLeafSize, meanWay, maxDepth)
-    # print(acc)
+    print(acc)
     print(
         'm',"{:.3}".format(np.mean(acc['myTree'])),
         's',"{:.3}".format(np.mean(acc['standard'])),
@@ -191,20 +191,37 @@ def house_votes_84(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
     y = dataArr[:, 0].astype('int64')
     printCategorical(X,y,'house-votes-84',curDepth, maxLeafSize, meanWay, maxDepth)
 
+def breast_cancer(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
+    # df=pd.read_csv('../dataset/categorical/Datasets/breast-cancer-wisconsin.txt')
+    file=open('../dataset/categorical/Datasets/breast-cancer-wisconsin.txt')
+    dataArr=[]
+    for line in file.readlines():
+        line=line.strip().split(',')
+        dataArr.append(line)
+    dataArr=np.array(dataArr)
+    dataArr=predeal.dealMissingValue(dataArr,'?')
+    class_label=LabelEncoder()
+    for index in range(len(dataArr[0])):
+        dataArr[:,index]=class_label.fit_transform(dataArr[:,index])
+    X=dataArr[:,1:]
+    y=dataArr[:,0].astype('int64')
+    printCategorical(X,y,'breast-cancer-wisconsin',curDepth, maxLeafSize, meanWay, maxDepth)
+
 
 if __name__ == '__main__':
-    Cervical_Cancer_Behavior_Risk(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
-    iris(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
-    # wine(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
-    # heart_deasese(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
-    # breast_cancer(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
-    # Maternal_Health_Risk(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
-    banknote_authentication(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
-    Wireless_Indoor_Localization(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
-    # Wine_Quality(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
+    # Cervical_Cancer_Behavior_Risk(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # iris(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # # wine(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # # heart_deasese(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
+    # # breast_cancer(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
+    # # Maternal_Health_Risk(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
+    # banknote_authentication(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # Wireless_Indoor_Localization(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # # Wine_Quality(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
     # balance_scale(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=8)
-    tic_tac_toe(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
-    Car_Evaluation(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
-    mushroom(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # tic_tac_toe(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # Car_Evaluation(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # mushroom(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
     house_votes_84(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
+    # breast_cancer(curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000)
     pass
