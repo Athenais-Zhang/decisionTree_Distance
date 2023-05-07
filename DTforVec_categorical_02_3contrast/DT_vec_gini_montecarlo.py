@@ -97,6 +97,7 @@ class DT_vec_gini_montecarlo:
         for cate in cates:
             monteCarloNum *= len(data[cate])
         monteCarloNum /= 10
+        monteCarloNum = 100 if monteCarloNum>100 else int(monteCarloNum)
         times=0
         while times<monteCarloNum:
             for cate in cates:
