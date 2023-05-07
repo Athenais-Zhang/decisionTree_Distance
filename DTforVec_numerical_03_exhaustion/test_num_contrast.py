@@ -21,6 +21,10 @@ class MyTestCase(unittest.TestCase):
         y = iris.target
         acc=self.contrastExperiment_numerical(X, y, curDepth, maxLeafSize, meanWay, maxDepth)
         print(acc)
+        print('average-myTree: ', sum(acc['myTree']) / len(acc['myTree']))
+        print('average-standard: ', sum(acc['standard']) / len(acc['standard']))
+        print('average-nearestCentroid: ', sum(acc['nearestCentroid']) / len(acc['nearestCentroid']))
+
 
     def contrastExperiment_numerical(self,X, y, curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
         k = 5
