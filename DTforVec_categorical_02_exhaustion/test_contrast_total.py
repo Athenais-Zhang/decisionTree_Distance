@@ -50,10 +50,10 @@ class MyTestCase(unittest.TestCase):
             ncd.fit(X_train, y_train)
             acc_ncd.append(ncd.score(X_test, y_test))
 
-        print("acc_gin: %.2f  , the detail is %s " % (np.mean(acc_gini[-1]), acc_gini))
-        print("acc_tra: %.2f  , the detail is %s " % (np.mean(acc_trad[-1]), acc_trad))
-        print("acc_std: %.2f  , the detail is %s " % (np.mean(acc_std[-1]), acc_std))
-        print("acc_ncd: %.2f  , the detail is %s " % (np.mean(acc_ncd[-1]), acc_ncd))
+        print("acc_gin: %.2f  , the detail is %s " % (np.mean(acc_gini), acc_gini))
+        print("acc_tra: %.2f  , the detail is %s " % (np.mean(acc_trad), acc_trad))
+        print("acc_std: %.2f  , the detail is %s " % (np.mean(acc_std), acc_std))
+        print("acc_ncd: %.2f  , the detail is %s " % (np.mean(acc_ncd), acc_ncd))
         # return acc
 
     def datasetTest(self,fileName,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):

@@ -1,7 +1,7 @@
 """
 作者：张依涵
-日期：2023年04月26日
-时间：20：25
+日期：2023年05月06日
+时间：21：32
 描述：
 """
 import math
@@ -9,15 +9,11 @@ import math
 import numpy as np
 from tqdm.auto import tqdm
 
-from DTforVec_categorical_02_exhaustion import constant
+from DTforVec_numerical_03_exhaustion import constant
 
 
 def calcDistance(data1, data2):
-        dis = 0
-        for chIndex in range(len(data1)):
-            if data1[chIndex] != data2[chIndex]:
-                dis += 1
-        return dis
+    return __euclideanDistance(data1, data2)
 
 def __euclideanDistance(data1, data2):
     sum = 0
@@ -32,22 +28,16 @@ def calcDistancesMetric(X):
     for j in tqdm(range(length)):
         for i in range(j):
             distances[i + ((j - 1) * j >> 1)] = calcDistance(X[i], X[j])
-            # distances[i + ((j - 1) * j >> 1)] = __euclideanDistance(X[i], X[j])
     return distances
-
 
 def getDistance(index1,index2):
     gl_distances = constant.get_value('gl_distances')
-    try:
-        i = min(index1,index2)
-        j = max(index1,index2)
-        if i == j:
-            dis = 0
-        else:
-            dis = gl_distances[i + ((j - 1) * j >> 1)]
-    except:
-        print("getDistance error")
-        return None
+    i = min(index1,index2)
+    j = max(index1,index2)
+    if i == j:
+        dis = 0
+    else:
+        dis = gl_distances[i + ((j - 1) * j >> 1)]
     return dis
 
 
@@ -75,12 +65,9 @@ def getGiniIndex(Dataset):
 
 
 def checkPartition(dataset, cate):
-    # gl_Xtrain = constant.get_value('gl_Xtrain')
     xSet=constant.get_value('gl_Xtrain')[dataset]
     length=len(xSet)
     for i in range(1,length):
         if ((xSet[0]==xSet[i]).all() == False):
             return None
-    # print("checkPartition")
-    # print(constant.get_value('gl_ytrain')[dataset])
     return np.argmax(np.bincount(constant.get_value('gl_ytrain')[dataset]))
