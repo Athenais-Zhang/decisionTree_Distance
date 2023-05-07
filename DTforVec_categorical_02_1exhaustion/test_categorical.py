@@ -6,9 +6,9 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.utils import shuffle
 
-from DTforVec_categorical_02_exhaustion import constant, tools, predeal
-from DTforVec_categorical_02_exhaustion.DT_vec_distance import DT_vec_distance
-from DTforVec_categorical_02_exhaustion.DT_vec_gini import DT_vec_gini
+from DTforVec_categorical_02_1exhaustion import constant, tools, predeal
+from DTforVec_categorical_02_1exhaustion.DT_vec_distance import DT_vec_distance
+from DTforVec_categorical_02_1exhaustion.DT_vec_gini import DT_vec_gini
 
 
 class MyTestCase(unittest.TestCase):

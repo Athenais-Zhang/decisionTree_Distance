@@ -7,10 +7,10 @@
 import numpy as np
 from tqdm.auto import tqdm
 
-from DTforVec_categorical_02_exhaustion import constant, tools
+from DTforVec_categorical_02_3contrast import constant, tools
 
 
-class DT_vec_gini:
+class DT_vec_gini_montecarlo:
     height = 0  # 树高
     maxDepth = 0  # 最大深度
     curDepth = 0  # 当前深度
@@ -93,23 +93,29 @@ class DT_vec_gini:
         # step3:计算初始分支结果并暂存
         sum_gini, giniIndeies, partitionResult = self.__calcBranches(cates, curRepresents, indeices)
 
-        # step4:迭代所有点为中心
+        monteCarloNum = 1
         for cate in cates:
-            for index in data[cate]:
-
-                curRepresents[cate] = index
-                sum_gini_temp, giniIndeies_temp, partitionResult_temp = self.__calcBranches(cates, curRepresents, indeices)
-                if sum_gini_temp < sum_gini:
-                    sum_gini = sum_gini_temp
-                    giniIndeies = giniIndeies_temp
-                    partitionResult = partitionResult_temp
-                    represents = curRepresents.copy()
+            monteCarloNum *= len(data[cate])
+        monteCarloNum /= 5
+        times=0
+        while times<monteCarloNum:
+            for cate in cates:
+                random_index = np.random.randint(0, len(data[cate]))
+                curRepresents[cate] = data[cate][random_index]
+            sum_gini_temp, giniIndeies_temp, partitionResult_temp = self.__calcBranches(cates, curRepresents, indeices)
+            times+=1
+            if sum_gini_temp < sum_gini:
+                sum_gini = sum_gini_temp
+                giniIndeies = giniIndeies_temp
+                partitionResult = partitionResult_temp
+                represents = curRepresents.copy()
+                times=0
 
         # step5:递归建树
         self.childTree={}
         for cate in cates:
             if giniIndeies[cate] == 0:
-                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+                self.childTree[cate] = DT_vec_gini_montecarlo(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
 
                 self.childTree[cate].centerIndex = represents[cate]
                 self.childTree[cate].center = constant.get_value('gl_Xtrain')[represents[cate]] if represents[cate] != None else None
@@ -117,14 +123,14 @@ class DT_vec_gini:
 
                 continue
             if len(partitionResult[cate]) == 0:
-                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+                self.childTree[cate] = DT_vec_gini_montecarlo(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
 
                 self.childTree[cate].centerIndex = represents[cate]
                 self.childTree[cate].center = constant.get_value('gl_Xtrain')[represents[cate]] if represents[cate] != None else None
                 self.childTree[cate].value = cate
                 continue
             elif len(partitionResult[cate]) ==len(indeices):
-                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+                self.childTree[cate] = DT_vec_gini_montecarlo(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
                 # self.childTree[cate].fit(partitionResult[cate], cate, represents[cate])
 
                 self.childTree[cate].centerIndex = represents[cate]
@@ -135,13 +141,13 @@ class DT_vec_gini:
             #     continue
             res=tools.checkPartition(partitionResult[cate],cate)
             if res is not None:
-                self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+                self.childTree[cate] = DT_vec_gini_montecarlo(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
 
                 self.childTree[cate].centerIndex = represents[cate]
                 self.childTree[cate].center = constant.get_value('gl_Xtrain')[represents[cate]] if represents[cate] != None else None
                 self.childTree[cate].value = res
                 continue
-            self.childTree[cate] = DT_vec_gini(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
+            self.childTree[cate] = DT_vec_gini_montecarlo(self.curDepth, self.maxLeafSize, self.meanWay, self.maxDepth)
             self.childTree[cate].fit(partitionResult[cate], cate, represents[cate])
 
         return self

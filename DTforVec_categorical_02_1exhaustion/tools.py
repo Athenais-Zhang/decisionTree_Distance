@@ -9,7 +9,7 @@ import math
 import numpy as np
 from tqdm.auto import tqdm
 
-from DTforVec_categorical_02_exhaustion import constant
+from DTforVec_categorical_02_1exhaustion import constant
 
 
 def calcDistance(data1, data2):

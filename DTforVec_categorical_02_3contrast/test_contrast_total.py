@@ -8,9 +8,10 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils import shuffle
 
-from DTforVec_categorical_02_exhaustion import constant, tools, predeal
-from DTforVec_categorical_02_exhaustion.DT_vec_distance import DT_vec_distance
-from DTforVec_categorical_02_exhaustion.DT_vec_gini import DT_vec_gini
+from DTforVec_categorical_02_3contrast import constant, tools, predeal
+from DTforVec_categorical_02_3contrast.DT_vec_distance import DT_vec_distance
+from DTforVec_categorical_02_3contrast.DT_vec_gini_exhaustion import DT_vec_gini_exhaustion
+from DTforVec_categorical_02_3contrast.DT_vec_gini_montecarlo import DT_vec_gini_montecarlo
 
 
 class MyTestCase(unittest.TestCase):
@@ -20,7 +21,8 @@ class MyTestCase(unittest.TestCase):
     def myTree_categoricalTest_contrast(self,X, y, curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
         k = 5
         skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=None)
-        acc_gini = []
+        acc_gini_eht = []
+        acc_gini_mc = []
         acc_trad=[]
         acc_std=[]
         acc_ncd=[]
@@ -32,11 +34,15 @@ class MyTestCase(unittest.TestCase):
             constant.set_value('gl_Xtrain', X_train)
             constant.set_value('gl_ytrain', y_train)
             constant.set_value('gl_distances', tools.calcDistancesMetric(X_train))
-
-            T_gini = DT_vec_gini()
             indeices = [index for index in range(len(X_train))]
-            T_gini.fit(indeices)
-            acc_gini.append(T_gini.score(X_test, y_test))
+
+            T_gini_eht = DT_vec_gini_exhaustion()
+            T_gini_eht.fit(indeices)
+            acc_gini_eht.append(T_gini_eht.score(X_test, y_test))
+
+            T_gini_mc = DT_vec_gini_montecarlo()
+            T_gini_mc.fit(indeices)
+            acc_gini_mc.append(T_gini_mc.score(X_test, y_test))
 
             T_trad = DT_vec_distance(curDepth, maxLeafSize, meanWay, maxDepth)
             T_trad.fit(X_train, y_train)
@@ -50,7 +56,8 @@ class MyTestCase(unittest.TestCase):
             ncd.fit(X_train, y_train)
             acc_ncd.append(ncd.score(X_test, y_test))
 
-        print("acc_gin: %.2f  , the detail is %s " % (np.mean(acc_gini), acc_gini))
+        print("acc_gini_eht: %.2f  , the detail is %s " % (np.mean(acc_gini_eht), acc_gini_eht))
+        print("acc_gini_mc: %.2f  , the detail is %s " % (np.mean(acc_gini_mc), acc_gini_mc))
         print("acc_tra: %.2f  , the detail is %s " % (np.mean(acc_trad), acc_trad))
         print("acc_std: %.2f  , the detail is %s " % (np.mean(acc_std), acc_std))
         print("acc_ncd: %.2f  , the detail is %s " % (np.mean(acc_ncd), acc_ncd))
@@ -71,13 +78,9 @@ class MyTestCase(unittest.TestCase):
         print(len(set(y)))
         self.myTree_categoricalTest_contrast(X,y)
 
-
     def test_assistant_evaluation(self, curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
-        # fileName = 'dataset/mushroom.csv'
         fileName='../dataset/categorical/Datasets/assistant-evaluation.txt'
         self.datasetTest(fileName,curDepth, maxLeafSize, meanWay, maxDepth)
-
-
 
     def test_balance_scale(self,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
         fileName = '../dataset/categorical/Datasets/balance-scale.txt'
@@ -86,8 +89,6 @@ class MyTestCase(unittest.TestCase):
     def test_breast_cancer_wisconsin(self,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
         fileName = '../dataset/categorical/Datasets/breast-cancer-wisconsin.txt'
         self.datasetTest(fileName,curDepth, maxLeafSize, meanWay, maxDepth)
-
-
 
     def test_car(self,curDepth=0, maxLeafSize=1, meanWay=None, maxDepth=1000000000):
         fileName = '../dataset/categorical/Datasets/car.txt'
