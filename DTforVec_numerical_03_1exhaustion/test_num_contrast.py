@@ -7,9 +7,9 @@ from sklearn.neighbors import NearestCentroid
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils import shuffle
 
-from DTforVec_numerical_03_exhaustion import predeal, constant, tools
-from DTforVec_numerical_03_exhaustion.DT_num_distance import DT_num_distance
-from DTforVec_numerical_03_exhaustion.DT_num_gini import DT_num_gini
+from DTforVec_numerical_03_1exhaustion import predeal, constant, tools
+from DTforVec_numerical_03_1exhaustion.DT_num_distance import DT_num_distance
+from DTforVec_numerical_03_1exhaustion.DT_num_gini import DT_num_gini
 
 
 class MyTestCase(unittest.TestCase):

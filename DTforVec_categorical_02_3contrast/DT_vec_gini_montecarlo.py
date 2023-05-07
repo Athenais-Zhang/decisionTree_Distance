@@ -96,7 +96,7 @@ class DT_vec_gini_montecarlo:
         monteCarloNum = 1
         for cate in cates:
             monteCarloNum *= len(data[cate])
-        monteCarloNum /= 5
+        monteCarloNum /= 10
         times=0
         while times<monteCarloNum:
             for cate in cates:

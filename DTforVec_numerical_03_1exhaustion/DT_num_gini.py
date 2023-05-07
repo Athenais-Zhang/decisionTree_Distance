@@ -6,7 +6,7 @@
 """
 import numpy as np
 
-from DTforVec_numerical_03_exhaustion import tools, constant
+from DTforVec_numerical_03_1exhaustion import tools, constant
 
 
 class DT_num_gini:

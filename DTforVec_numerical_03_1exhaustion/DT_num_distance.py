@@ -6,7 +6,7 @@
 """
 import numpy as np
 
-from DTforVec_numerical_03_exhaustion import constant, tools
+from DTforVec_numerical_03_1exhaustion import constant, tools
 
 
 class DT_num_distance:
