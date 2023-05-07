@@ -70,4 +70,30 @@ def checkPartition(dataset, cate):
     for i in range(1,length):
         if ((xSet[0]==xSet[i]).all() == False):
             return None
-    return np.argmax(np.bincount(constant.get_value('gl_ytrain')[dataset]))
+    # return np.argmax(np.bincount(constant.get_value('gl_ytrain')[dataset]))
+    return np.argmax(np.bincount(constant.get_value('gl_ytrain')[dataset].astype(int)))
+    # return cate
+
+
+
+
+def getMean(dataset_cate_index):
+    gl_Xtrain = constant.get_value('gl_Xtrain')
+    dataset_cate= [gl_Xtrain[index] for index in dataset_cate_index]
+    mean=[]
+    for row in range(len(dataset_cate)):
+        mean.append(np.mean(dataset_cate[:, row]))
+    return mean
+
+
+def getMedian(dataset_cate_index):
+    medianIndex=None
+    dis=np.inf
+    for i in dataset_cate_index:
+        dis_temp=0
+        for j in dataset_cate_index:
+            dis_temp+=getDistance(i,j)
+        if dis_temp<dis:
+            dis=dis_temp
+            medianIndex=i
+    return medianIndex
