@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="65a3a6c3-997c-41f7-9ec3-a47d488e0108" name="Changes" comment="03 set distance matrix as global variable">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_categorical_02_3contrast/DT_vec_gini_montecarlo.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_categorical_02_3contrast/DT_vec_gini_montecarlo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_MonteCarlo/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_2MonteCarlo/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion/DT_num_distance.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_1exhaustion/DT_num_distance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion/DT_num_gini.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_1exhaustion/DT_num_gini.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_1exhaustion/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion/constant.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_1exhaustion/constant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion/predeal.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_1exhaustion/predeal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion/test_num_contrast.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_1exhaustion/test_num_contrast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/DTforVec_numerical_03_1exhaustion/tools.py" afterDir="false" />
-    </list>
+    <list default="true" id="65a3a6c3-997c-41f7-9ec3-a47d488e0108" name="Changes" comment="03 set distance matrix as global variable" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -184,7 +173,7 @@
       <workItem from="1682390044700" duration="3294000" />
       <workItem from="1683425130232" duration="443000" />
       <workItem from="1683445720063" duration="167000" />
-      <workItem from="1683445905818" duration="1357000" />
+      <workItem from="1683445905818" duration="2138000" />
     </task>
     <task id="LOCAL-00001" summary="FIRST builded">
       <created>1679486842623</created>
@@ -304,7 +293,7 @@
     <SUITE FILE_PATH="coverage/decisionTree_Distance$pytest_for_test_num_contrast_MyTestCase_test_wine.coverage" NAME="pytest for test_num_contrast.MyTestCase.test_wine Coverage Results" MODIFIED="1683443297504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion" />
     <SUITE FILE_PATH="coverage/decisionTree_Distance$tools.coverage" NAME="tools Coverage Results" MODIFIED="1679899516637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DTforSeq_04_distance" />
     <SUITE FILE_PATH="coverage/decisionTree_Distance$test__4_.coverage" NAME="test (4) Coverage Results" MODIFIED="1679923198609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DTforSeq_04_distance" />
-    <SUITE FILE_PATH="coverage/decisionTree_Distance$pytest_for_test_contrast_total_MyTestCase_test_titanic.coverage" NAME="pytest for test_contrast_total.MyTestCase.test_titanic Coverage Results" MODIFIED="1683446983543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DTforVec_categorical_02_3contrast" />
+    <SUITE FILE_PATH="coverage/decisionTree_Distance$pytest_for_test_contrast_total_MyTestCase_test_titanic.coverage" NAME="pytest for test_contrast_total.MyTestCase.test_titanic Coverage Results" MODIFIED="1683447862028" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DTforVec_categorical_02_3contrast" />
     <SUITE FILE_PATH="coverage/decisionTree_Distance$pytest_for_test_num_contrast_MyTestCase_test_Wine_Quality.coverage" NAME="pytest for test_num_contrast.MyTestCase.test_Wine_Quality Coverage Results" MODIFIED="1683443436506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion" />
     <SUITE FILE_PATH="coverage/decisionTree_Distance$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1680246580287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DT_Distance_basic" />
     <SUITE FILE_PATH="coverage/decisionTree_Distance$pytest_for_test_num_contrast_MyTestCase_test_Wireless_Indoor_Localization.coverage" NAME="pytest for test_num_contrast.MyTestCase.test_Wireless_Indoor_Localization Coverage Results" MODIFIED="1683443409885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DTforVec_numerical_03_exhaustion" />

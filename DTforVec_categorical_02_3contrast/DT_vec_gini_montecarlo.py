@@ -98,7 +98,7 @@ class DT_vec_gini_montecarlo:
             monteCarloNum *= len(data[cate])
         monteCarloNum /= 10
         monteCarloNum = 100 if monteCarloNum>100 else int(monteCarloNum)
-        times=0
+        times = 0
         while times<monteCarloNum:
             for cate in cates:
                 random_index = np.random.randint(0, len(data[cate]))
