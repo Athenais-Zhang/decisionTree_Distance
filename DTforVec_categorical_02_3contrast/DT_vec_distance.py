@@ -49,7 +49,7 @@ class DT_vec_distance:
         for data in dataset:
             # ds.append(data.toString())
             # str3 = '.'.join([str(x) for x in list])
-            ds.append('.'.join([str(x) for x in data]))
+            ds.append(','.join([str(x) for x in data]))
         for i in set(ds):
             res[i]=ds.count(i)
         resultMaxTime=-1
@@ -58,7 +58,8 @@ class DT_vec_distance:
             if res[i]>resultMaxTime:
                 resultMaxTime=res[i]
                 result=i
-        return result
+        # return result
+        return list(np.array(result.split(','),dtype=int))
 
 
 
@@ -111,7 +112,10 @@ class DT_vec_distance:
             #     meanCla[cl] = self.__calcMean(cate[cl])
             # else:
             #     meanCla[cl] = self.__calcMean2(cate[cl])
-            meanCla[cl]=self.__calcMedian(cate[cl])
+            if self.meanWay=='MEAN':
+                meanCla[cl]=self.__calcMean(cate[cl])
+            elif self.meanWay=='MEDIAN':
+                meanCla[cl]=self.__calcMedian(cate[cl])
         return meanCla
 
     def fit(self, X, y):

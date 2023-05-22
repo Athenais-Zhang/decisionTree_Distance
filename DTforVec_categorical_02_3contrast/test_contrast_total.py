@@ -23,7 +23,8 @@ class MyTestCase(unittest.TestCase):
         skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=None)
         acc_gini_eht = []
         acc_gini_mc = []
-        acc_trad=[]
+        acc_median = []
+        acc_mean = []
         acc_std=[]
         acc_ncd=[]
         for train_index, test_index in skf.split(X, y):
@@ -44,9 +45,14 @@ class MyTestCase(unittest.TestCase):
             T_gini_mc.fit(indeices)
             acc_gini_mc.append(T_gini_mc.score(X_test, y_test))
 
-            T_trad = DT_vec_distance(curDepth, maxLeafSize, meanWay, maxDepth)
-            T_trad.fit(X_train, y_train)
-            acc_trad.append(T_trad.score(X_test, y_test))
+            T_median = DT_vec_distance(curDepth, maxLeafSize, meanWay='MEDIAN', maxDepth=1000000000)
+            T_median.fit(X_train, y_train)
+            acc_median.append(T_median.score(X_test, y_test))
+
+
+            T_mean = DT_vec_distance(curDepth, maxLeafSize, meanWay='MEAN', maxDepth=1000000000)
+            T_mean.fit(X_train, y_train)
+            acc_mean.append(T_mean.score(X_test, y_test))
 
             standardTree = DecisionTreeClassifier()
             standardTree.fit(X_train, y_train)
@@ -58,7 +64,8 @@ class MyTestCase(unittest.TestCase):
 
         print("acc_gini_eht: %.2f  , the detail is %s " % (np.mean(acc_gini_eht), acc_gini_eht))
         print("acc_gini_mc: %.2f  , the detail is %s " % (np.mean(acc_gini_mc), acc_gini_mc))
-        print("acc_tra: %.2f  , the detail is %s " % (np.mean(acc_trad), acc_trad))
+        print("acc_median: %.2f  , the detail is %s " % (np.mean(acc_median), acc_median))
+        print("acc_mean: %.2f  , the detail is %s " % (np.mean(acc_mean), acc_mean))
         print("acc_std: %.2f  , the detail is %s " % (np.mean(acc_std), acc_std))
         print("acc_ncd: %.2f  , the detail is %s " % (np.mean(acc_ncd), acc_ncd))
         # return acc

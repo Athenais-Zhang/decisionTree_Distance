@@ -5,6 +5,11 @@
 # @Site    : 
 # @File    : test_unit.py
 # @Software: PyCharm
+
+# 命令：
+# python3 test.py [0,1,2]
+# dot -Tpng dotdot.dot -o tree.png
+
 import datetime
 import os
 import sys
@@ -133,5 +138,5 @@ if __name__ == '__main__':
     global_var.set_value('distance_measure', distance_measures[int(sys.argv[1])])
 
     # test("../dataset/gene.txt")
-    # test_codeCorrectly("../dataset/activity_2.txt")
-    test_allDataset()
+    test_codeCorrectly("../dataset/sequence/activity.txt")
+    # test_allDataset()
