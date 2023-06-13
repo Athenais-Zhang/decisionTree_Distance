@@ -4,6 +4,12 @@
 时间：21：40
 描述：
 """
+
+import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
 from collections import Counter
 
 import numpy as np

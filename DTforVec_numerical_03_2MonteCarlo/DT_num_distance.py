@@ -4,6 +4,12 @@
 时间：11：20
 描述：
 """
+import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+
 import numpy as np
 
 from DTforVec_numerical_03_2MonteCarlo import constant, tools

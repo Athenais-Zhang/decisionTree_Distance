@@ -1,4 +1,11 @@
 # python3 -m pytest -s test_num_contrast.py::MyTestCase::test_iris
+import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+
+
 import unittest
 
 import numpy as np
