@@ -148,7 +148,7 @@ class testSequenceUtils:
 
         X = np.array(X, dtype=object)
         y = np.array(y)
-        acc = {'myTree_mc_rank':[],'T_median_rank':[],'myTree_mc_edit':[],'T_median_edit': []}
+        acc = {'myTree_mc_rank':[],'T_median_rank':[],'myTree_mc_lcs':[],'T_median_lcs': [],'myTree_mc_edit':[],'T_median_edit': []}
         print_data_info('sequence',filename, X,y)
         skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=None)
         index = 0
@@ -158,28 +158,63 @@ class testSequenceUtils:
             X_train, y_train = shuffle(X_train, y_train)
             constant.set_value('gl_Xtrain', X_train)
             constant.set_value('gl_ytrain', y_train)
-            constant.set_value('gl_distances', tools.calcDistancesMetric('sequence','rank',X_train))
 
-            t_rank = dt.DT_currency(dataType='sequence',distanceMeasure='rank')
-            indeices = [index for index in range(len(X_train))]
-            t_rank.fit(indeices)
-            index += 1
-            acc['myTree_mc_rank'].append(t_rank.score(X_test, y_test))
+            # 利用rank距离
+            # constant.set_value('gl_distances', tools.calcDistancesMetric('sequence','rank',X_train))
+
+            # t_rank = dt.DT_currency(dataType='sequence',distanceMeasure='rank')
+            # indeices = [index for index in range(len(X_train))]
+            # t_rank.fit(indeices)
+            # index += 1
+            # acc['myTree_mc_rank'].append(t_rank.score(X_test, y_test))
 
 
-            T_median_rank = dtc.DT_center('sequence',distanceMeasure='rank',curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
-            T_median_rank.fit(indeices)
-            acc['T_median_rank'].append(T_median_rank.score(X_test, y_test))
+            # T_median_rank = dtc.DT_center('sequence',distanceMeasure='rank',curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
+            # T_median_rank.fit(indeices)
+            # acc['T_median_rank'].append(T_median_rank.score(X_test, y_test))
 
-            constant.set_value('gl_distances', tools.calcDistancesMetric('sequence','lcstr',X_train))
 
-            t_edit = dt.DT_currency(dataType='sequence',distanceMeasure='lcstr')
+            # 利用lcs距离
+            # constant.set_value('gl_distances', tools.calcDistancesMetric('sequence','lcstr',X_train))
+
+            # t_lcs = dt.DT_currency(dataType='sequence',distanceMeasure='lcstr')
+            # indeices = [index for index in range(len(X_train))]
+            # t_lcs.fit(indeices)
+            # index += 1
+            # acc['myTree_mc_lcs'].append(t_lcs.score(X_test, y_test))
+
+            # T_median_lcs = dtc.DT_center('sequence',distanceMeasure='lcstr',curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
+            # T_median_lcs.fit(indeices)
+            # acc['T_median_lcs'].append(T_median_lcs.score(X_test, y_test))
+
+
+            # # 利用edit距离 
+            # constant.set_value('gl_distances', tools.calcDistancesMetric('sequence','edit',X_train))
+
+            # t_edit = dt.DT_currency(dataType='sequence',distanceMeasure='edit')
+            # indeices = [index for index in range(len(X_train))]
+            # t_edit.fit(indeices)
+            # index += 1
+            # acc['myTree_mc_edit'].append(t_edit.score(X_test, y_test))
+
+
+            # T_median_edit = dtc.DT_center('sequence',distanceMeasure='edit',curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
+            # T_median_edit.fit(indeices)
+            # acc['T_median_edit'].append(T_median_edit.score(X_test, y_test))
+
+
+            # pip install python-Levenshtein
+            distanceMeasure='Levenshtein'
+            constant.set_value('gl_distances', tools.calcDistancesMetric('sequence',distanceMeasure,X_train))
+
+            t_edit = dt.DT_currency(dataType='sequence',distanceMeasure=distanceMeasure)
             indeices = [index for index in range(len(X_train))]
             t_edit.fit(indeices)
             index += 1
             acc['myTree_mc_edit'].append(t_edit.score(X_test, y_test))
 
-            T_median_edit = dtc.DT_center('sequence',distanceMeasure='lcstr',curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
+
+            T_median_edit = dtc.DT_center('sequence',distanceMeasure=distanceMeasure,curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
             T_median_edit.fit(indeices)
             acc['T_median_edit'].append(T_median_edit.score(X_test, y_test))
 
