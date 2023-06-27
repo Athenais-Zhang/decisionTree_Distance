@@ -2,6 +2,7 @@ from collections import Counter
 import math
 import os
 import sys
+import Levenshtein
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
@@ -37,6 +38,8 @@ def calcDistance(dataType,distanceMeasure,data1, data2):
             return __distance_measure_lcstr(data1, data2)
         elif distanceMeasure=='edit':
             return __editDistance(data1, data2)
+        elif distanceMeasure=='Levenshtein':
+            return Levenshtein.distance(data1, data2)
     else:
         # TODO
         return

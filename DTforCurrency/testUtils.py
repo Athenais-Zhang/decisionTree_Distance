@@ -188,17 +188,33 @@ class testSequenceUtils:
             # acc['T_median_lcs'].append(T_median_lcs.score(X_test, y_test))
 
 
-            # 利用edit距离 
-            constant.set_value('gl_distances', tools.calcDistancesMetric('sequence','edit',X_train))
+            # # 利用edit距离 
+            # constant.set_value('gl_distances', tools.calcDistancesMetric('sequence','edit',X_train))
 
-            t_edit = dt.DT_currency(dataType='sequence',distanceMeasure='edit')
+            # t_edit = dt.DT_currency(dataType='sequence',distanceMeasure='edit')
+            # indeices = [index for index in range(len(X_train))]
+            # t_edit.fit(indeices)
+            # index += 1
+            # acc['myTree_mc_edit'].append(t_edit.score(X_test, y_test))
+
+
+            # T_median_edit = dtc.DT_center('sequence',distanceMeasure='edit',curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
+            # T_median_edit.fit(indeices)
+            # acc['T_median_edit'].append(T_median_edit.score(X_test, y_test))
+
+
+            # pip install python-Levenshtein
+            distanceMeasure='Levenshtein'
+            constant.set_value('gl_distances', tools.calcDistancesMetric('sequence',distanceMeasure,X_train))
+
+            t_edit = dt.DT_currency(dataType='sequence',distanceMeasure=distanceMeasure)
             indeices = [index for index in range(len(X_train))]
             t_edit.fit(indeices)
             index += 1
             acc['myTree_mc_edit'].append(t_edit.score(X_test, y_test))
 
 
-            T_median_edit = dtc.DT_center('sequence',distanceMeasure='edit',curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
+            T_median_edit = dtc.DT_center('sequence',distanceMeasure=distanceMeasure,curDepth=0, maxLeafSize=1, meanWay='MEDIAN', maxDepth=1000000000)
             T_median_edit.fit(indeices)
             acc['T_median_edit'].append(T_median_edit.score(X_test, y_test))
 
